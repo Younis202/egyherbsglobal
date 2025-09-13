@@ -1,43 +1,17 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { Slider } from "@/components/ui/slider";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Filter, RefreshCw } from "lucide-react";
+import { MapPin, Star } from "lucide-react";
 
 export function ProductFilters() {
-  const [priceRange, setPriceRange] = useState([0, 100]);
-  const [selectedOrigins, setSelectedOrigins] = useState<string[]>([]);
-  const [selectedCertifications, setSelectedCertifications] = useState<string[]>([]);
-  
-  const origins = ['Egypt', 'India', 'Sri Lanka', 'Morocco'];
-  const certifications = ['Organic', 'Non-GMO', 'Fair Trade'];
-  
-  const handleOriginChange = (origin: string) => {
-    setSelectedOrigins(prev => 
-      prev.includes(origin) 
-        ? prev.filter(o => o !== origin) 
-        : [...prev, origin]
-    );
-  };
-  
-  const handleCertificationChange = (cert: string) => {
-    setSelectedCertifications(prev => 
-      prev.includes(cert) 
-        ? prev.filter(c => c !== cert) 
-        : [...prev, cert]
-    );
-  };
-  
-  const resetFilters = () => {
-    setPriceRange([0, 100]);
-    setSelectedOrigins([]);
-    setSelectedCertifications([]);
-  };
+  const destinations = [
+    { name: 'Egypt', rating: 4.8, description: 'Ancient spices & herbs' },
+    { name: 'India', rating: 4.9, description: 'Premium quality spices' },
+    { name: 'Sri Lanka', rating: 4.7, description: 'Ceylon specialties' },
+    { name: 'Morocco', rating: 4.6, description: 'Exotic blends' }
+  ];
 
   return (
     <Card className="p-6 sticky top-24">
@@ -47,76 +21,45 @@ export function ProductFilters() {
         transition={{ duration: 0.6 }}
       >
         <div className="flex items-center justify-between mb-5">
-          <h3 className="font-medium text-base">Filters</h3>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={resetFilters}
-            className="text-gray-500 hover:text-emerald-600 flex items-center gap-1 text-sm"
-          >
-            <RefreshCw className="h-4 w-4 mr-1" />
-            Reset
-          </Button>
+          <h3 className="font-medium text-base">Top Destinations</h3>
         </div>
         
-        <div className="space-y-6">
-
-          {/* Origin */}
-          <div>
-            <h4 className="font-medium mb-3 text-sm flex items-center">
-              <Filter className="w-4 h-4 mr-2 text-emerald-600" />
-              Origin
-            </h4>
-            <div className="space-y-2">
-              {origins.map((origin) => (
-                <div key={origin} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={`origin-${origin}`} 
-                    checked={selectedOrigins.includes(origin)}
-                    onCheckedChange={() => handleOriginChange(origin)}
-                    className="text-emerald-600 border-gray-300 h-4 w-4"
-                  />
-                  <Label 
-                    htmlFor={`origin-${origin}`}
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    {origin}
-                  </Label>
+        <div className="space-y-4">
+          {destinations.map((destination, index) => (
+            <motion.div
+              key={destination.name}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+            >
+              <div className="flex-shrink-0">
+                <MapPin className="w-5 h-5 text-emerald-600 mt-0.5" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="font-medium text-sm text-gray-900">
+                    {destination.name}
+                  </h4>
+                  <div className="flex items-center space-x-1">
+                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                    <span className="text-xs text-gray-600">{destination.rating}</span>
+                  </div>
                 </div>
-              ))}
-            </div>
+                <p className="text-xs text-gray-500">{destination.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        
+        <div className="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
+          <div className="flex items-center space-x-2 mb-2">
+            <MapPin className="w-4 h-4 text-emerald-600" />
+            <span className="text-sm font-medium text-emerald-800">Featured Region</span>
           </div>
-
-          {/* Certifications */}
-          <div>
-            <h4 className="font-medium mb-3 text-sm flex items-center">
-              <Filter className="w-4 h-4 mr-2 text-emerald-600" />
-              Certifications
-            </h4>
-            <div className="space-y-2">
-              {certifications.map((cert) => (
-                <div key={cert} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={`cert-${cert}`} 
-                    checked={selectedCertifications.includes(cert)}
-                    onCheckedChange={() => handleCertificationChange(cert)}
-                    className="text-emerald-600 border-gray-300 h-4 w-4"
-                  />
-                  <Label 
-                    htmlFor={`cert-${cert}`}
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    {cert}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Apply Filters Button */}
-          <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2">
-            Apply Filters
-          </Button>
+          <p className="text-xs text-emerald-700">
+            Discover premium spices from the most renowned spice-growing regions worldwide.
+          </p>
         </div>
       </motion.div>
     </Card>
