@@ -7,9 +7,9 @@ import { MapPin, Star } from "lucide-react";
 
 export function ProductFilters() {
   const destinations = [
-    { name: 'Egypt', rating: 4.8, description: 'Ancient spices & herbs' },
+    { name: 'Germany', rating: 4.8, description: 'Ancient spices & herbs' },
     { name: 'India', rating: 4.9, description: 'Premium quality spices' },
-    { name: 'Sri Lanka', rating: 4.7, description: 'Ceylon specialties' },
+    { name: 'Türkiye', rating: 4.7, description: 'Ceylon specialties' },
     { name: 'Morocco', rating: 4.6, description: 'Exotic blends' }
   ];
 
